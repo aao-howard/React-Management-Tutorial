@@ -2,6 +2,24 @@ import React, { Component } from 'react';
 // import logo from './logo.svg';
 import Customer from './components/Customer';
 import './App.css';
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableHead from '@mui/material/TableHead';
+import TableBody from '@mui/material/TableBody';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import { withStyles } from '@mui/styles';
+
+const styles = theme => ({
+  root: {
+    with: '100%',
+    // marginTop: theme.spacing.unit * 3,
+    overflowX: "auto"
+  },
+  table: {
+    minWidth: 1080
+  }
+})
 
 // const customer = {
 //   id: 1,
@@ -43,6 +61,9 @@ const customers = [
 // class App extends React.Component {
 class App extends Component {
   render() {
+    
+    const { classes } = this.props;
+
     return (
 
       // <div className="App">
@@ -65,7 +86,8 @@ class App extends Component {
       //   job={customer.job}
       // />
 
-      <div>
+      //<div>
+      <Paper className={classes.root}>
 
         {/* <Customer
           id={customers[0].id}
@@ -108,12 +130,30 @@ class App extends Component {
           })
         } */}
         
-        { customers.map(c => { return ( <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} /> ); }) }
+        {/* { customers.map(c => { return ( <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} /> ); }) } */}
 
-      </div>
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell>No</TableCell>
+              <TableCell>Photo</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Birthday</TableCell>
+              <TableCell>Gender</TableCell>
+              <TableCell>Job</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            { customers.map(c => { return ( <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} /> ); }) }            
+          </TableBody>
+        </Table>
+      
+      </Paper> 
+      //</div>
 
     );
   }
 }
 
-export default App;
+// export default App;
+export default withStyles(styles)(App);
