@@ -8,16 +8,20 @@ import TableHead from '@mui/material/TableHead';
 import TableBody from '@mui/material/TableBody';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
+import CircularProgress from '@mui/material/CircularProgress';
 import { withStyles } from '@mui/styles';
 
 const styles = theme => ({
   root: {
     with: '100%',
-    // marginTop: theme.spacing.unit * 3,
+    marginTop: 3, //theme.spacing(3),
     overflowX: "auto"
   },
   table: {
     minWidth: 1080
+  },
+  progress: {
+    margin: 2 //theme.spacing(2)
   }
 })
 
@@ -57,25 +61,41 @@ const styles = theme => ({
 //   }
 // ]
 
+/*
+1) constructor()
+2) componentWillMount()
+3) render()
+4) componentDidMount()
+
+props or state 가 변경된 경우에는 shouldComponentUpdate()
+
+*/
+
 // function App() {
 // class App extends React.Component {
 class App extends Component {
 
   state = {
-    customers: ""
+    customers: "",
+    completed: 0
   }
 
   componentDidMount() {
+    // this.timer = setInterval(this.progress, 20);   // 나중에 써먹자
     this.callApi()
       .then(res => this.setState({customers: res}))
       .catch(err => console.log(err));
   }
-
   callApi = async () => {
     const response = await fetch('/api/customers');
     const body = await response.json();
     return body;
   }
+
+  // progress = () => {
+  //   const { completed } = this.state;
+  //   this.setState({ completed: completed >= 100 ? 0 : completed + 1});  // 나중에 써먹자
+  // }
 
   render() {
     
@@ -177,7 +197,19 @@ class App extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            { this.state.customers ? this.state.customers.map(c => { return ( <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} /> ); }) : "" }
+            { 
+              this.state.customers ? 
+                this.state.customers.map(c => { return ( <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} /> ); }) 
+                : 
+                <TableRow>
+                  <TableCell colSpan="6" align="center">
+                    {/* <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed} /> */}
+                    {/* <CircularProgress className={classes.progress} value={this.state.completed} /> */}
+                    <CircularProgress className={classes.progress} />
+                    {/* {this.state.completed} */}
+                  </TableCell>
+                </TableRow> 
+            }
           </TableBody>
         </Table>
 
