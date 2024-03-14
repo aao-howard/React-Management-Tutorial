@@ -28,7 +28,7 @@ class Customer extends Component {
           <TableCell>{this.props.name}</TableCell>
           <TableCell>{this.props.birthday}</TableCell>
           <TableCell>{this.props.gender}</TableCell>
-          <TableCell>{this.props.job}</TableCell>
+          <TableCell>{this.props.job} [{this.props.createdate}]</TableCell>
         </TableRow>
 
       //</div> div-tag 를 사용하니 에러가 발생했다.
