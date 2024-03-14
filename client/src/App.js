@@ -30,36 +30,53 @@ const styles = theme => ({
 //   job: '대학생1'
 // }
 
-const customers = [
-  {
-    id: 1,
-    image: 'https://picsum.photos/id/1/64/48',
-    name: 'Howard Yun',
-    birthday: '961222',
-    gender: 'Male',
-    job: 'Student'
-  },
-  {
-    id: 2,
-    image: 'https://picsum.photos/id/2/64/48',
-    name: 'HC Yun',
-    birthday: '961223',
-    gender: 'Male',
-    job: 'Programmer'
-  },
-  {
-    id: 3,
-    image: 'https://picsum.photos/id/3/64/48',
-    name: 'Webirang',
-    birthday: '961224',
-    gender: 'Female',
-    job: 'Scientist'
-  }
-]
+// const customers = [
+//   {
+//     id: 1,
+//     image: 'https://picsum.photos/id/1/64/48',
+//     name: 'Howard Yun',
+//     birthday: '961222',
+//     gender: 'Male',
+//     job: 'Student'
+//   },
+//   {
+//     id: 2,
+//     image: 'https://picsum.photos/id/2/64/48',
+//     name: 'HC Yun',
+//     birthday: '961223',
+//     gender: 'Male',
+//     job: 'Programmer'
+//   },
+//   {
+//     id: 3,
+//     image: 'https://picsum.photos/id/3/64/48',
+//     name: 'Webirang',
+//     birthday: '961224',
+//     gender: 'Female',
+//     job: 'Scientist'
+//   }
+// ]
 
 // function App() {
 // class App extends React.Component {
 class App extends Component {
+
+  state = {
+    customers: ""
+  }
+
+  componentDidMount() {
+    this.callApi()
+      .then(res => this.setState({customers: res}))
+      .catch(err => console.log(err));
+  }
+
+  callApi = async () => {
+    const response = await fetch('/api/customers');
+    const body = await response.json();
+    return body;
+  }
+
   render() {
     
     const { classes } = this.props;
@@ -132,7 +149,7 @@ class App extends Component {
         
         {/* { customers.map(c => { return ( <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} /> ); }) } */}
 
-        <Table className={classes.table}>
+        {/* <Table className={classes.table}>
           <TableHead>
             <TableRow>
               <TableCell>No</TableCell>
@@ -146,8 +163,24 @@ class App extends Component {
           <TableBody>
             { customers.map(c => { return ( <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} /> ); }) }            
           </TableBody>
+        </Table> */}
+
+        <Table className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell>No</TableCell>
+              <TableCell>Photo</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Birthday</TableCell>
+              <TableCell>Gender</TableCell>
+              <TableCell>Job</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            { this.state.customers ? this.state.customers.map(c => { return ( <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} /> ); }) : "" }
+          </TableBody>
         </Table>
-      
+
       </Paper> 
       //</div>
 
