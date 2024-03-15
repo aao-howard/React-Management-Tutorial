@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 // import logo from './logo.svg';
 import Customer from './components/Customer';
+import CustomerAdd from './components/CustomerAdd';
 import './App.css';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -75,9 +76,27 @@ props or state 가 변경된 경우에는 shouldComponentUpdate()
 // class App extends React.Component {
 class App extends Component {
 
-  state = {
-    customers: "",
-    completed: 0
+  // state = {
+  //   customers: "",
+  //   completed: 0
+  // }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      customers: '',
+      completed: 0
+    }
+  }
+
+  stateRefresh = () => {
+    this.setState({
+      customers: '',
+      completed: 0
+    });
+    this.callApi()
+      .then(res => this.setState({customers: res}))
+      .catch(err => console.log(err));
   }
 
   componentDidMount() {
@@ -123,7 +142,7 @@ class App extends Component {
       //   job={customer.job}
       // />
 
-      //<div>
+      <div>
       <Paper className={classes.root}>
 
         {/* <Customer
@@ -214,7 +233,8 @@ class App extends Component {
         </Table>
 
       </Paper> 
-      //</div>
+      <CustomerAdd stateRefresh={this.stateRefresh}/>
+      </div>
 
     );
   }

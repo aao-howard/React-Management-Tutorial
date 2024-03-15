@@ -34,6 +34,10 @@ mssql.connect(mssqlConfig, err => {
   console.log(`Connection Successful~!`);
 })
 
+const multer = require('multer');
+const exp = require('constants');
+const upload = multer({dest: './upload'});
+
 // app.get('/api/hello', (req, res) => {
 //   res.send({message: 'Hello Express!'});
 // })
@@ -72,6 +76,31 @@ app.get('/api/customers', (req, res) => {
       res.send(results.recordset);
     }
   );
+})
+
+app.use('/image', express.static('./upload'));
+
+app.post('/api/customers', upload.single('image'), (req, res) => {
+  let image = '/image/' + req.file.filename;
+  let name = req.body.name;
+  let birthday = req.body.birthday;
+  let gender = req.body.gender;
+  let job = req.body.job;
+  let sql = `INSERT INTO dbo.testCustomer VALUES ( '${image}', '${name}', '${birthday}', '${gender}', '${job}', 0, GETDATE(), GETDATE() )`;
+  // console.log(image);
+  // console.log(name);
+  // console.log(birthday);
+  // console.log(gender);
+  // console.log(job);
+  // console.log(sql);
+  mssql.query(
+    sql,
+    (err, results) => {
+      res.send(results.rowsAffected);
+      console.log(`results.rowsAffected: ${results.rowsAffected}`);
+      // console.log(err);
+    }
+  )
 })
 
 // app.listen(port, () => console.log(`Listening on port ${port}`)); // 따옴표(') 가 아니라 특수문자(`) 를 사용한다.
