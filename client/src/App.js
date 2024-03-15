@@ -213,15 +213,17 @@ class App extends Component {
               <TableCell>Birthday</TableCell>
               <TableCell>Gender</TableCell>
               <TableCell>Job</TableCell>
+              <TableCell>DEL</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             { 
               this.state.customers ? 
-                this.state.customers.map(c => { return ( <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} createdate={c.createdate} /> ); }) 
-                : 
+                // this.state.customers.map(c => { return ( <Customer key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} createdate={c.createdate} /> ); }) 
+                this.state.customers.map(c => { return ( <Customer stateRefresh={this.stateRefresh} key={c.id} id={c.id} image={c.image} name={c.name} birthday={c.birthday} gender={c.gender} job={c.job} createdate={c.createdate} /> ); }) 
+              : 
                 <TableRow>
-                  <TableCell colSpan="6" align="center">
+                  <TableCell colSpan="7" align="center">
                     {/* <CircularProgress className={classes.progress} variant="determinate" value={this.state.completed} /> */}
                     {/* <CircularProgress className={classes.progress} value={this.state.completed} /> */}
                     <CircularProgress className={classes.progress} />

@@ -97,8 +97,20 @@ app.post('/api/customers', upload.single('image'), (req, res) => {
     sql,
     (err, results) => {
       res.send(results.rowsAffected);
-      console.log(`results.rowsAffected: ${results.rowsAffected}`);
+      console.log(`INSERT results.rowsAffected: ${results.rowsAffected}`);
       // console.log(err);
+    }
+  )
+})
+
+app.delete('/api/customers/:id', (req, res) => {
+  let id = req.params.id;
+  let sql = `UPDATE dbo.testCustomer SET isDeleted = 1, modifydate = GETDATE() WHERE id = '${id}'`;
+  mssql.query(
+    sql,
+    (err, results) => {
+      res.send(results.rowsAffected);
+      console.log(`UPDATE results.rowsAffected: ${results.rowsAffected}`);
     }
   )
 })
