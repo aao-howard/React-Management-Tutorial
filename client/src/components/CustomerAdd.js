@@ -125,10 +125,10 @@ class CustomerAdd extends React.Component {
               </Button>
             </label>
             <br/><br/>
-            <TextFileld label="Name" type="text" name="userName" value={this.state.userName} onChange={this.handleValueChange} /><br/>
-            <TextFileld label="Birthday" type="text" name="birthday" value={this.state.birthday} onChange={this.handleValueChange} /><br/>
-            <TextFileld label="Gender" type="text" name="gender" value={this.state.gender} onChange={this.handleValueChange} /><br/>
-            <TextFileld label="Job" type="text" name="job" value={this.state.job} onChange={this.handleValueChange} /><br/>
+            <TextFileld label="Name" type="text" name="userName" value={this.state.userName} onChange={this.handleValueChange} /><br/><br/>
+            <TextFileld label="Birthday" type="text" name="birthday" value={this.state.birthday} onChange={this.handleValueChange} /><br/><br/>
+            <TextFileld label="Gender" type="text" name="gender" value={this.state.gender} onChange={this.handleValueChange} /><br/><br/>
+            <TextFileld label="Job" type="text" name="job" value={this.state.job} onChange={this.handleValueChange} /><br/><br/>
           </DialogContent>
           <DialogActions>
             <Button variant="contained" color="primary" onClick={this.handleFormSubmit}>Add</Button>
